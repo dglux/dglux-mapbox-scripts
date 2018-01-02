@@ -5,16 +5,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node dev.js"
+    "build-dev": "node build.js > dist/polygon_circles.js",
+    "build-min": "node build.js | uglifyjs > dist/polygon_circles.min.js",
+    "test": "mocha"
   },
   "dependencies": {
-    "@turf/circle": "^5.1.5",
-    "bubleify": "^1.1.0"
+    "@turf/circle": "^5.1.5"
   },
   "devDependencies": {
     "browser-pack-flat": "^3.0.5",
     "browserify": "^14.5.0",
+    "bubleify": "^1.1.0",
     "common-shakeify": "^0.4.5",
-    "watchify": "^3.9.0"
+    "mocha": "^4.1.0",
+    "uglify-js": "^3.3.4"
   }
 }
