@@ -26,7 +26,7 @@ function bundle() {
 
   instance.bundle()
     .on("error", err => {
-      console.log(err.message);
+      console.log(err);
     })
     .pipe(process.stdout);
 }

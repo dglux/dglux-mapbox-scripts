@@ -91,7 +91,7 @@ function onInvoke(meta, getValue, setValue) {
     }
 
     const coordinates = [parseFloat(row[lngFieldIdx]), parseFloat(row[latFieldIdx])];
-    const radius = radiusFieldIdx < 0 ? options.radius : parseFloat(row[radiusFieldIdx]);
+    let radius = radiusFieldIdx < 0 ? options.radius : parseFloat(row[radiusFieldIdx]);
 
     if (isNaN(radius)) {
       radius = 0;
