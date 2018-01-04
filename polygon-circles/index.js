@@ -4,6 +4,7 @@ const circle = require("@turf/circle");
 table: tabledata
 latField: string
 lngField: string
+radiusField?: string
 steps: number, default is 64
 radius: number, default is 0.2
 units: string, can be [miles, feet, kilometers, degrees, radians], default is kilometers
@@ -15,6 +16,7 @@ function onInvoke(meta, getValue, setValue) {
     table: getValue("table"),
     latField: getValue("latField"),
     lngField: getValue("lngField"),
+    radiusField: getValue("radiusField"),
     steps: parseFloat(getValue("steps")),
     radius: parseFloat(getValue("radius")),
     units: getValue("units"),
@@ -22,6 +24,8 @@ function onInvoke(meta, getValue, setValue) {
   };
 
   // set defaults
+
+  let radiusScalar = 1;
 
   if (!options.steps || isNaN(options.steps)) {
     options.steps = 64;
@@ -38,7 +42,7 @@ function onInvoke(meta, getValue, setValue) {
   // allow for feet, which is not supported by turf
   if (options.units == "feet") {
     options.units = "miles";
-    options.radius /= 5280;
+    radiusScalar /= 5280;
   }
 
   // quick check, probably won't amount to much
@@ -49,6 +53,7 @@ function onInvoke(meta, getValue, setValue) {
 
   let latFieldIdx = -1;
   let lngFieldIdx = -1;
+  let radiusFieldIdx = -1;
   const propertyNames = [];
 
   options.table.cols.forEach((col, i) => {
@@ -58,6 +63,10 @@ function onInvoke(meta, getValue, setValue) {
 
     if (col.name === options.lngField) {
       lngFieldIdx = i;
+    }
+
+    if (options.radiusField && col.name === options.radiusField) {
+      radiusFieldIdx = i;
     }
 
     if (options.addProperties) {
@@ -74,7 +83,7 @@ function onInvoke(meta, getValue, setValue) {
     const properties = {};
     if (options.addProperties) {
       propertyNames.forEach((name, i) => {
-        if (name == options.lngField || name == options.latField) {
+        if (i === lngFieldIdx || i == latFieldIdx || i == radiusFieldIdx) {
           return;
         }
         properties[name] = row[i];
@@ -82,8 +91,13 @@ function onInvoke(meta, getValue, setValue) {
     }
 
     const coordinates = [parseFloat(row[lngFieldIdx]), parseFloat(row[latFieldIdx])];
-    
-    return circle(coordinates, options.radius, {
+    const radius = radiusFieldIdx < 0 ? options.radius : parseFloat(row[radiusFieldIdx]);
+
+    if (isNaN(radius)) {
+      radius = 0;
+    }
+
+    return circle(coordinates, radius * radiusScalar, {
       steps: options.steps,
       units: options.units,
       properties

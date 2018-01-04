@@ -20,6 +20,7 @@ Inputs:
 - table: tabledata
 - latField: string
 - lngField: string
+- radiusField?: string
 - steps: number, default is 64
 - radius: number, default is 0.2
 - units: string, can be [miles, feet, kilometers, degrees, radians], default is kilometers

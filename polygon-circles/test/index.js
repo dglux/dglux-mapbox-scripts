@@ -10,7 +10,7 @@ function assertPromise(promise, test, message) {
   }
 }
 
-const testCases = ["one"];
+const testCases = ["one", "two"];
 
 describe("Output tests", () => {
   testCases.forEach(testCase => {
