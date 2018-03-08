@@ -29,3 +29,16 @@ Inputs:
 Outputs:
 
 - geojson: string
+
+### feature-area-sort
+
+Script that sorts a GeoJSON FeatureCollection's features by relative area.
+
+Inputs:
+
+- inputGeoJson: string
+- selectionProperty: string
+
+Outputs:
+
+- outputGeoJson: string

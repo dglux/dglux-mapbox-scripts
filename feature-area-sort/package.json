@@ -1,0 +1,23 @@
+{
+  "name": "@dglux/feature-area-sort",
+  "version": "1.0.0",
+  "description": "Sort GeoJSON features by relative area",
+  "main": "index.js",
+  "scripts": {
+    "build-dev": "node build.js > dist/feature_area_sort.js",
+    "build-min": "node build.js | uglifyjs > dist/feature_area_sort.min.js",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "browser-pack-flat": "^3.0.5",
+    "browserify": "^14.5.0",
+    "bubleify": "^1.1.0",
+    "common-shakeify": "^0.4.5",
+    "mocha": "^4.1.0",
+    "uglify-js": "^3.3.4"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@mapbox/geojson-area": "^0.2.2"
+  }
+}
